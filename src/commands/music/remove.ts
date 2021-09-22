@@ -1,13 +1,14 @@
 import Bot from '../../Client'
 import { Message, MessageEmbed } from 'discord.js'
 import Command from '../../structures/Command';
+import PermLevels from '../../structures/PermLevels';
 
 export default new class RemoveCommand extends Command {
 
     public constructor() {
         super('remove',
             RemoveSong,
-            0,
+            PermLevels.DJ,
             [],
             ['EMBED_LINKS', 'CONNECT', 'SPEAK', 'USE_VAD'],
             'remove (id of the video in the queue)');

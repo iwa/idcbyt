@@ -1,13 +1,14 @@
 import Bot from '../../Client'
 import { Message } from 'discord.js'
 import Command from '../../structures/Command';
+import PermLevels from '../../structures/PermLevels';
 
 export default new class StopCommand extends Command {
 
     public constructor() {
         super('stop',
             StopMusic,
-            0,
+            PermLevels.DJ,
             ['leave', 'disconnect', 'dc', 'fuckoff'],
             ['EMBED_LINKS', 'CONNECT', 'SPEAK', 'USE_VAD', 'ADD_REACTIONS'],
             'stop');

@@ -93,9 +93,13 @@ Bot.on('messageCreate', async (msg) => {
             return;
         }
 
-        if(cmd.permLevel == PermLevels.Iwa && msg.author.id == process.env.IWA)
+        if (cmd.permLevel == PermLevels.Iwa && msg.author.id == process.env.IWA)
             await cmd.run(msg, args);
-        else if(cmd.permLevel == PermLevels.Everyone)
+        else if (cmd.permLevel == PermLevels.DJ &&
+            (msg.member.roles.cache.find((role) => role.name.toLowerCase() === "dj") ||
+                msg.member.permissions.has('ADMINISTRATOR')))
+            await cmd.run(msg, args);
+        else if (cmd.permLevel == PermLevels.Everyone)
             await cmd.run(msg, args);
     }
 });

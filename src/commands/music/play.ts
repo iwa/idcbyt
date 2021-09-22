@@ -1,13 +1,14 @@
 import Bot from '../../Client'
 import { Message, MessageEmbed, Util } from 'discord.js'
 import Command from '../../structures/Command';
+import PermLevels from '../../structures/PermLevels';
 
 export default new class PlayCommand extends Command {
 
     public constructor() {
         super('play',
             PlayMusic,
-            0,
+            PermLevels.Everyone,
             ['add', 'p'],
             ['EMBED_LINKS', 'CONNECT', 'SPEAK', 'USE_VAD'],
             'play (link | keywords)');

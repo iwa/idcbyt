@@ -1,13 +1,14 @@
 import Bot from '../../Client'
 import { Message } from 'discord.js'
 import Command from '../../structures/Command';
+import PermLevels from '../../structures/PermLevels';
 
 export default new class ClearCommand extends Command {
 
     public constructor() {
         super('shuffle',
             ShuffleQueue,
-            0,
+            PermLevels.DJ,
             [],
             ['EMBED_LINKS', 'CONNECT', 'SPEAK', 'USE_VAD'],
             'shuffle');

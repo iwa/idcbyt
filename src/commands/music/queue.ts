@@ -1,13 +1,14 @@
 import Bot from '../../Client'
 import { Message, MessageEmbed, Util } from 'discord.js'
 import Command from '../../structures/Command';
+import PermLevels from '../../structures/PermLevels';
 
 export default new class QueueCommand extends Command {
 
     public constructor() {
         super('queue',
             Queue,
-            0,
+            PermLevels.Everyone,
             ['q'],
             ['EMBED_LINKS', 'CONNECT', 'SPEAK', 'USE_VAD'],
             'queue');

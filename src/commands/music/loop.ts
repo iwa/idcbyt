@@ -1,13 +1,14 @@
 import Bot from '../../Client'
 import { Message, MessageEmbed } from 'discord.js'
 import Command from '../../structures/Command';
+import PermLevels from '../../structures/PermLevels';
 
 export default new class LoopCommand extends Command {
 
     public constructor() {
         super('loop',
             Loop,
-            0,
+            PermLevels.DJ,
             ['l'],
             ['EMBED_LINKS', 'CONNECT', 'SPEAK', 'USE_VAD'],
             'loop');
