@@ -6,9 +6,9 @@ import Bot from './Client';
 import { MessageReaction, User, VoiceChannel } from 'discord.js';
 import { Manager } from "erela.js";
 
-import ready from './events/ready';
 import Command from './structures/Command';
 import makePermsErrorBetter from "./utils/makePermsErrorBetter";
+import PermLevels from "./structures/PermLevels";
 
 // Process related Events
 process.on('uncaughtException', async exception => Bot.log.error(exception));
@@ -19,9 +19,9 @@ Bot.on('warn', (warn) => Bot.log.warn(warn));
 Bot.on('shardError', (error) => Bot.log.error(error));
 Bot.on('shardDisconnect', (event) => Bot.log.debug({ msg: "iwabot disconnected", event: event }));
 Bot.on('shardReconnecting', (event) => Bot.log.debug({ msg: "iwabot reconnecting", event: event }));
-Bot.on('shardResume', async () => await ready());
+Bot.on('shardResume', () => { Bot.user.setPresence({ status: 'online', activities: [{ name: '-help', type: 'WATCHING' }] }) });
 Bot.once('shardReady', async () => {
-    await ready();
+    Bot.user.setPresence({ status: 'online', activities: [{ name: '-help', type: 'WATCHING' }] });
     Bot.log.debug(`logged in as ${Bot.user.username}`);
 
     Bot.music = new Manager({
@@ -69,8 +69,6 @@ Bot.once('shardReady', async () => {
     Bot.music.init(Bot.user.id);
 
     Bot.on("raw", d => Bot.music.updateVoiceState(d));
-
-    await pronounRoles();
 });
 
 // Message Event
@@ -103,24 +101,6 @@ Bot.on('messageCreate', async (msg) => {
             await cmd.run(msg, args);
     }
 });
-
-
-// Reaction Role Events
-import reactionRoles from './events/reactionRoles';
-Bot.on('messageReactionAdd', async (reaction: MessageReaction, author: User) => {
-    if (!reaction.message.guild.available) return;
-    if (author.bot) return;
-    reactionRoles.add(reaction, author);
-});
-Bot.on('messageReactionRemove', async (reaction: MessageReaction, author: User) => {
-    if (!reaction.message.guild.available) return;
-    if (author.bot) return;
-    reactionRoles.remove(reaction, author);
-});
-
-import pronounRoles from "./utils/pronounRoles";
-import PermLevels from "./structures/PermLevels";
-setInterval(async () => { await pronounRoles(); }, 300000);
 
 // VC Check if Bot's alone
 Bot.on('voiceStateUpdate', async (oldState, newState) => {
