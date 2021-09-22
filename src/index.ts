@@ -3,7 +3,7 @@ dotenv.config();
 
 import Bot from './Client';
 
-import { MessageReaction, User, VoiceChannel } from 'discord.js';
+import { VoiceChannel } from 'discord.js';
 import { Manager } from "erela.js";
 
 import Command from './structures/Command';
@@ -95,7 +95,8 @@ Bot.on('messageCreate', async (msg) => {
             await cmd.run(msg, args);
         else if (cmd.permLevel == PermLevels.DJ &&
             (msg.member.roles.cache.find((role) => role.name.toLowerCase() === "dj") ||
-                msg.member.permissions.has('ADMINISTRATOR')))
+                msg.member.permissions.has('ADMINISTRATOR') ||
+                msg.member.permissions.has('MANAGE_GUILD')))
             await cmd.run(msg, args);
         else if (cmd.permLevel == PermLevels.Everyone)
             await cmd.run(msg, args);
