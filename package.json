@@ -4,8 +4,10 @@
   "description": "",
   "main": "build/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+    "build": "rm -rf build/ && yarn tsc",
+    "update": "git fetch origin main && git pull origin main && rm -rf build/ && yarn && yarn tsc",
+    "lavadocker": "docker run --name lavalink -p 8070:8070 -v \"$PWD/lavalink/application.yml:/opt/Lavalink/application.yml\" --restart unless-stopped -d fredboat/lavalink:master-v3"
+},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/iwa/idcbyt.git"
