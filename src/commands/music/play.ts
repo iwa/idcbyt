@@ -32,7 +32,10 @@ async function PlayMusic(msg: Message, args: string[]) {
 
     if (player.voiceChannel !== voiceChannel.id) return msg.channel.send(Bot.createEmbed(':x: You need to be connected in the same voice channel as me to use this command'));
 
-    if (!player.voiceState) return;
+    if (!voiceChannel.joinable) {
+        player.destroy();
+        return msg.channel.send(Bot.createEmbed(`:x: I can't connect to \`${voiceChannel.name}\` :(`));
+    }
 
     let video_url = args[0].split('&');
 
