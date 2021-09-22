@@ -11,7 +11,7 @@ export default new class InviteCommand extends Command {
 }
 
 async function SendLink(msg: Message) {
-    await msg.channel.send(Bot.createEmbed(null, "[Invite me!](https://discord.com/oauth2/authorize?client_id=447883949209944075&scope=bot&permissions=6479662144)"))
+    await msg.channel.send(Bot.createEmbed(null, "[Invite me!](https://discord.com/oauth2/authorize?client_id=802265358081196142&scope=bot&permissions=6479662144)"))
         .then(() => { Bot.log.info({ msg: 'invite', author: { id: msg.author.id, name: msg.author.tag }, guild: { id: msg.guild.id, name: msg.guild.name } }); })
         .catch(err => Bot.log.error(err));
 }
