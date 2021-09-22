@@ -16,8 +16,6 @@ export default new class SkipCommand extends Command {
 }
 
 async function SkipSong(msg: Message) {
-    if (!msg.member.permissions.has('MANAGE_CHANNELS')) return;
-
     let voiceChannel = msg.member.voice.channel;
     if (!voiceChannel) return;
 
