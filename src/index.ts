@@ -91,15 +91,29 @@ Bot.on('messageCreate', async (msg) => {
             return;
         }
 
-        if (cmd.permLevel == PermLevels.Iwa && msg.author.id == process.env.IWA)
-            await cmd.run(msg, args);
-        else if (cmd.permLevel == PermLevels.DJ &&
-            (msg.member.roles.cache.find((role) => role.name.toLowerCase() === "dj") ||
-                msg.member.permissions.has('ADMINISTRATOR') ||
-                msg.member.permissions.has('MANAGE_GUILD')))
-            await cmd.run(msg, args);
-        else if (cmd.permLevel == PermLevels.Everyone)
-            await cmd.run(msg, args);
+        switch (cmd.permLevel) {
+            case PermLevels.Iwa:
+                if (msg.author.id == process.env.IWA)
+                    await cmd.run(msg, args);
+                break;
+
+            case PermLevels.DJ:
+                if (msg.member.roles.cache.find((role) => role.name.toLowerCase() === "dj") ||
+                    msg.member.permissions.has('ADMINISTRATOR') ||
+                    msg.member.permissions.has('MANAGE_GUILD') ||
+                    msg.member?.voice.channel.members.size <= 2) {
+                    await cmd.run(msg, args);
+                } else
+                    msg.channel.send(Bot.createEmbed(":x: You need to have either `DJ` role or `Manage Server` permission!", null, "You have all the perms only if you're alone with the bot"));
+                break;
+
+            case PermLevels.Everyone:
+                await cmd.run(msg, args);
+                break;
+
+            default:
+                break;
+        }
     }
 });
 
