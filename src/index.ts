@@ -27,7 +27,7 @@ Bot.once('shardReady', async () => {
     Bot.music = new Manager({
         nodes: [
             {
-                identifier: 'main',
+                identifier: 'idcbyt',
                 host: process.env.LAVALINK_HOST,
                 port: parseInt(process.env.LAVALINK_PORT, 10),
                 password: process.env.LAVALINK_PWD,
