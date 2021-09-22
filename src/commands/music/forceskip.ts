@@ -7,7 +7,7 @@ export default new class SkipCommand extends Command {
 
     public constructor() {
         super('forceskip',
-            SkipSong,
+            ForceSkipSong,
             PermLevels.DJ,
             ['fs'],
             ['EMBED_LINKS', 'CONNECT', 'SPEAK', 'USE_VAD'],
@@ -16,7 +16,7 @@ export default new class SkipCommand extends Command {
 
 }
 
-async function SkipSong(msg: Message) {
+async function ForceSkipSong(msg: Message) {
     let voiceChannel = msg.member.voice.channel;
     if (!voiceChannel) return;
 
