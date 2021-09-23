@@ -42,6 +42,9 @@ async function PlayMusic(msg: Message, args: string[]) {
     if (video_url[0].match(/^https?:\/\/(((www|m)\.)youtube.com)\/playlist(.*)$/)) {
         let res = await Bot.music.search(args.join(), msg.author);
 
+        if (res.exception)
+            return msg.channel.send(Bot.createEmbed(":x: An error occured :(", res.exception.message));
+
         if (res.loadType === 'LOAD_FAILED') return msg.channel.send(Bot.createEmbed(':x: An unexpected error occurred.'));
         if (!res.tracks) return msg.channel.send(Bot.createEmbed(':x: An unexpected error occurred.'));
 
@@ -53,6 +56,9 @@ async function PlayMusic(msg: Message, args: string[]) {
             await msg.channel.send(Bot.createEmbed(null, `<:youtube:890514824071639130> Playlist: **${playlist.name}**`, null, { name: 'Add to the queue:' }));
     } else {
         let res = await Bot.music.search(args.join(' '), msg.author);
+
+        if (res.exception)
+            return msg.channel.send(Bot.createEmbed(":x: An error occured :(", res.exception.message));
 
         let icon = '';
         if (res.tracks[0].uri.startsWith("https://www.youtube.com"))

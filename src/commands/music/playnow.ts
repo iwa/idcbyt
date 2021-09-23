@@ -42,6 +42,9 @@ async function PlayNowMusic(msg: Message, args: string[]) {
     if (!video_url[0].match(/^https?:\/\/(((www|m)\.)youtube.com)\/playlist(.*)$/)) {
         let res = await Bot.music.search(args.join(' '), msg.author);
 
+        if (res.exception)
+            return msg.channel.send(Bot.createEmbed(":x: An error occured :(", res.exception.message));
+
         let icon = '';
         if (res.tracks[0].uri.startsWith("https://www.youtube.com"))
             icon = "<:youtube:890514824071639130> ";
