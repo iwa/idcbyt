@@ -50,9 +50,15 @@ async function PlayMusic(msg: Message, args: string[]) {
         let playlist = res.playlist;
 
         if (playlist)
-            await msg.channel.send(Bot.createEmbed(null, `📄Playlist: **${playlist.name}**`, null, { name: 'Add to the queue:' }));
+            await msg.channel.send(Bot.createEmbed(null, `<:youtube:890514824071639130> Playlist: **${playlist.name}**`, null, { name: 'Add to the queue:' }));
     } else {
         let res = await Bot.music.search(args.join(' '), msg.author);
+
+        let icon = '';
+        if (res.tracks[0].uri.startsWith("https://www.youtube.com"))
+            icon = "<:youtube:890514824071639130> ";
+        else if (res.tracks[0].uri.startsWith("https://soundcloud.com"))
+            icon = "<:soundcloud:890514824151310356> ";
 
         if (res.loadType === 'LOAD_FAILED') return msg.channel.send(Bot.createEmbed(':x: An unexpected error occurred.'));
         if (!res.tracks) return msg.channel.send(Bot.createEmbed(':x: An unexpected error occurred.'));
@@ -61,7 +67,7 @@ async function PlayMusic(msg: Message, args: string[]) {
 
         player.queue.add(res.tracks[0]);
 
-        await msg.channel.send(Bot.createEmbed(null, `[${res.tracks[0].title}](${res.tracks[0].uri})`, null, { name: 'Add to the queue' }, res.tracks[0].thumbnail));
+        await msg.channel.send(Bot.createEmbed(null, `${icon}[${res.tracks[0].title}](${res.tracks[0].uri})`, null, { name: '➕ Add to the queue' }, res.tracks[0].thumbnail));
         Bot.log.info({ msg: 'music added to queue', author: { id: msg.author.id, name: msg.author.tag }, guild: { id: msg.guild.id, name: msg.guild.name }, song: { name: Util.escapeMarkdown(res.tracks[0].title), url: res.tracks[0].uri } });
     }
 

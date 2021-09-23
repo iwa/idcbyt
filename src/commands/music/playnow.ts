@@ -7,7 +7,7 @@ export default new class PlayNowCommand extends Command {
 
     public constructor() {
         super('playnow',
-            PlayMusic,
+            PlayNowMusic,
             PermLevels.DJ,
             ['pn'],
             ['EMBED_LINKS', 'CONNECT', 'SPEAK', 'USE_VAD'],
@@ -16,7 +16,7 @@ export default new class PlayNowCommand extends Command {
 
 }
 
-async function PlayMusic(msg: Message, args: string[]) {
+async function PlayNowMusic(msg: Message, args: string[]) {
     if (args.length < 1) return;
 
     const voiceChannel = msg.member.voice.channel;
@@ -42,6 +42,12 @@ async function PlayMusic(msg: Message, args: string[]) {
     if (!video_url[0].match(/^https?:\/\/(((www|m)\.)youtube.com)\/playlist(.*)$/)) {
         let res = await Bot.music.search(args.join(' '), msg.author);
 
+        let icon = '';
+        if (res.tracks[0].uri.startsWith("https://www.youtube.com"))
+            icon = "<:youtube:890514824071639130> ";
+        else if (res.tracks[0].uri.startsWith("https://soundcloud.com"))
+            icon = "<:soundcloud:890514824151310356> ";
+
         if (!res.tracks) return msg.channel.send(":x: An unexpected error occurred.");
 
         if (player.queue.includes(res.tracks[0])) return msg.channel.send(Bot.createEmbed(':x: Song already in the queue!'));
@@ -49,7 +55,7 @@ async function PlayMusic(msg: Message, args: string[]) {
         player.queue.add(res.tracks[0], 0);
         player.stop();
 
-        await msg.channel.send(Bot.createEmbed(null, `[${res.tracks[0].title}](${res.tracks[0].uri})`, null, { name: 'Playing now' }, res.tracks[0].thumbnail));
+        await msg.channel.send(Bot.createEmbed(null, `${icon}[${res.tracks[0].title}](${res.tracks[0].uri})`, null, { name: 'Playing now' }, res.tracks[0].thumbnail));
         Bot.log.info({ msg: 'playnow', author: { id: msg.author.id, name: msg.author.tag }, guild: { id: msg.guild.id, name: msg.guild.name }, song: { name: Util.escapeMarkdown(res.tracks[0].title), url: res.tracks[0].uri } });
     }
 
