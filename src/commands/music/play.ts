@@ -20,7 +20,7 @@ async function PlayMusic(msg: Message, args: string[]) {
     if (args.length < 1) return;
 
     const voiceChannel = msg.member.voice.channel;
-    if (!voiceChannel) return msg.channel.send(Bot.createEmbed(':x: You need to be in a voice channel in order to use this command'));
+    if (!voiceChannel) return msg.channel.send(Bot.createEmbed(':x: You must be in a voice channel in order to use this command'));
 
     const player = Bot.music.create({
         guild: msg.guild.id,
@@ -30,7 +30,7 @@ async function PlayMusic(msg: Message, args: string[]) {
 
     if (player.state !== "CONNECTED") player.connect();
 
-    if (player.voiceChannel !== voiceChannel.id) return msg.channel.send(Bot.createEmbed(':x: You need to be connected in the same voice channel as me to use this command'));
+    if (player.voiceChannel !== voiceChannel.id) return msg.channel.send(Bot.createEmbed(':x: You must be connected in the same voice channel as me to use this command'));
 
     if (!voiceChannel.joinable) {
         player.destroy();
