@@ -21,8 +21,9 @@ async function SendStats(msg: Message) {
     let guilds = Bot.guilds.cache.size;
     let users = Bot.users.cache.size;
     let VCs = Bot.music.players.size;
+    let version = Bot.version;
 
-    await msg.channel.send(Bot.createEmbed('⚙️ Stats', `ping: \`${ping}ms\`\nguilds: \`${guilds}\`\nusers: \`${users}\`\nvoice: \`${VCs}\` connections`))
+    await msg.channel.send(Bot.createEmbed('⚙️ Stats', `ping: \`${ping}ms\`\nguilds: \`${guilds}\`\nusers: \`${users}\`\nvoice: \`${VCs}\` connections`, `#${version}`))
         .then(() => { Bot.log.info({ msg: 'ping', author: { id: msg.author.id, name: msg.author.tag }, guild: { id: msg.guild.id, name: msg.guild.name } }); })
         .catch(err => Bot.log.error(err));
 }

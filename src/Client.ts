@@ -8,6 +8,9 @@ import createEmbed from "./utils/createEmbed";
 export default new class Bot extends Client {
 
     public prefix = process.env.PREFIX;
+    public version: string = require('child_process')
+        .execSync('git rev-parse --short HEAD')
+        .toString().trim();
 
     public log = log;
 
