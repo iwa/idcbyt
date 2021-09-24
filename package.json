@@ -32,7 +32,7 @@
         "utf-8-validate": "^5.0.5"
     },
     "devDependencies": {
-        "pino-pretty": "^7.0.1",
+        "pino-pretty": "git+https://github.com/pinojs/pino-pretty.git#7a0c8768a3427314de8e7659aa1707b83d3dfbdf",
         "typescript": "^4.4.3"
     }
 }
