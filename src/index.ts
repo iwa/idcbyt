@@ -9,6 +9,7 @@ import { Manager } from "erela.js";
 import Command from './structures/Command';
 import makePermsErrorBetter from "./utils/makePermsErrorBetter";
 import PermLevels from "./structures/PermLevels";
+import Spotify from "erela.js-spotify";
 
 // Process related Events
 process.on('uncaughtException', async exception => Bot.log.error(exception));
@@ -41,6 +42,12 @@ Bot.once('shardReady', async () => {
             const guild = Bot.guilds.cache.get(id);
             if (guild) guild.shard.send(payload);
         },
+        plugins: [
+            new Spotify({
+                clientID: process.env.SPOTIFY_CLIENT,
+                clientSecret: process.env.SPOTIFY_SECRET
+            })
+        ]
     }).on("nodeConnect", (node) => Bot.log.info({ msg: 'new lavalink node', node: node.options.identifier }))
         .on("nodeError", (node, error) => Bot.log.error({ msg: `lavalink node error\n${error.message}`, node: node.options.identifier }))
         .on("trackStuck", async (player, track, payload) => {

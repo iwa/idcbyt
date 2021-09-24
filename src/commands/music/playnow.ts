@@ -46,10 +46,12 @@ async function PlayNowMusic(msg: Message, args: string[]) {
             return msg.channel.send(Bot.createEmbed(":x: An error occured :(", res.exception.message));
 
         let icon = '';
-        if (res.tracks[0].uri.startsWith("https://www.youtube.com"))
-            icon = "<:youtube:890514824071639130> ";
-        else if (res.tracks[0].uri.startsWith("https://soundcloud.com"))
-            icon = "<:soundcloud:890514824151310356> ";
+        if (res.tracks[0].uri) {
+            if (res.tracks[0].uri.startsWith("https://www.youtube.com"))
+                icon = "<:youtube:890514824071639130> ";
+            else if (res.tracks[0].uri.startsWith("https://soundcloud.com"))
+                icon = "<:soundcloud:890514824151310356> ";
+        }
 
         if (!res.tracks) return msg.channel.send(":x: An unexpected error occurred.");
 
