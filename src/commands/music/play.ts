@@ -26,6 +26,7 @@ async function PlayMusic(msg: Message, args: string[]) {
         guild: msg.guild.id,
         voiceChannel: msg.member.voice.channel.id,
         textChannel: msg.channel.id,
+        selfDeafen: true
     });
 
     if (player.state !== "CONNECTED") player.connect();
