@@ -6,6 +6,7 @@ let member = new MessageEmbed();
 import * as fs from 'fs';
 import Command from '../../structures/Command';
 import PermLevels from '../../structures/PermLevels';
+import SlashCommand from '../../structures/SlashCommand';
 
 readDirs()
 setTimeout(() => {
@@ -41,15 +42,14 @@ export default new class HelpCommand extends Command {
 
 async function Help(msg: Message, args: string[]) {
     if (args.length == 1) {
-        let cmd: Command = Bot.commands.get(args[0]) || Bot.commands.find((comd) => comd.aliases && comd.aliases.includes(args[0]));
-        if (!cmd || !cmd.usage) return;
+        let cmd: SlashCommand = Bot.commands.get(args[0]);
+        if (!cmd) return;
         if (cmd.permLevel == PermLevels.Staff && !msg.member.permissions.has('MANAGE_GUILD')) return;
 
         let embed = new MessageEmbed();
 
         embed.setTitle(`${Bot.prefix}${cmd.name}`);
         embed.setDescription("Syntax : `( )` is needed argument, `[ ]` is optional argument");
-        embed.addField("Usage", `\`${Bot.prefix}${cmd.usage}\``, true);
 
         if (cmd.aliases) {
             let aliases = [...cmd.aliases]

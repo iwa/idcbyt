@@ -3,13 +3,14 @@ dotenv.config();
 
 import Bot from './Client';
 
-import { VoiceChannel } from 'discord.js';
+import { GuildMember, VoiceChannel } from 'discord.js';
 import { Manager } from "erela.js";
 
 import Command from './structures/Command';
 import makePermsErrorBetter from "./utils/makePermsErrorBetter";
 import PermLevels from "./structures/PermLevels";
 import Spotify from "erela.js-spotify";
+import SlashCommand from "./structures/SlashCommand";
 
 // Process related Events
 process.on('uncaughtException', async exception => Bot.log.error(exception));
@@ -79,6 +80,7 @@ Bot.once('shardReady', async () => {
 });
 
 // Message Event
+/*
 Bot.on('messageCreate', async (msg) => {
     if (!msg) return;
     if (msg.author.bot) return;
@@ -116,6 +118,54 @@ Bot.on('messageCreate', async (msg) => {
 
             case PermLevels.Everyone:
                 await cmd.run(msg, args);
+                break;
+
+            default:
+                break;
+        }
+    }
+});*/
+
+Bot.on('interactionCreate', async (interaction) => {
+    if (!interaction) return;
+    if (!interaction.isCommand()) return;
+    if (interaction.member.user.bot) return;
+    if (!interaction.guild) {
+        Bot.log.trace({ msg: 'dm', author: { id: interaction.user.id, name: interaction.user.tag }, content: interaction.commandName });
+        return;
+    }
+
+    let req = interaction.commandName.toLowerCase();
+    let cmd: SlashCommand = Bot.commands.get(req);
+
+    if ((interaction.member as GuildMember).bannable == null) return;
+    let member = interaction.member as GuildMember;
+
+    if (cmd) {
+        if (cmd.discordPerm && !interaction.guild.me.permissions.has(cmd.discordPerm)) {
+            interaction.reply("perm error");
+            //makePermsErrorBetter(interaction, cmd);
+            return;
+        }
+
+        switch (cmd.permLevel) {
+            case PermLevels.Iwa:
+                if (interaction.member.user.id === process.env.IWA)
+                    await cmd.run(interaction, member);
+                break;
+
+            case PermLevels.DJ:
+                if (member.roles.cache.find((role) => role.name.toLowerCase() === "dj") ||
+                    member.permissions.has('ADMINISTRATOR') ||
+                    member.permissions.has('MANAGE_GUILD') ||
+                    member?.voice.channel.members.size <= 2) {
+                    await cmd.run(interaction, member);
+                } else
+                    interaction.reply(Bot.createEmbed(":x: You need to have either `DJ` role or `Manage Server` permission!", null, "You have all the perms with the bot only when you're alone with the bot"));
+                break;
+
+            case PermLevels.Everyone:
+                await cmd.run(interaction, member);
                 break;
 
             default:
