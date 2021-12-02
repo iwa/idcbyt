@@ -103,7 +103,7 @@ Bot.on('messageCreate', async (msg) => {
 
         switch (cmd.permLevel) {
             case PermLevels.Iwa:
-                if (msg.author.id == process.env.IWA)
+                if (msg.author.id === process.env.IWA)
                     await cmd.run(msg, args);
                 break;
 
@@ -112,6 +112,8 @@ Bot.on('messageCreate', async (msg) => {
                     msg.member.permissions.has('ADMINISTRATOR') ||
                     msg.member.permissions.has('MANAGE_GUILD') ||
                     msg.member?.voice.channel.members.size <= 2) {
+                    await cmd.run(msg, args);
+                } else if (msg.author.id === process.env.IWA && Bot.sudo) {
                     await cmd.run(msg, args);
                 } else
                     msg.channel.send(Bot.createEmbed(":x: You need to have either `DJ` role or `Manage Server` permission!", null, "You have all the perms with the bot only when you're alone with the bot"));

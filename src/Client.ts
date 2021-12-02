@@ -42,6 +42,8 @@ export default new class Bot extends Client {
         return iwa;
     }
 
+    public sudo: boolean = false;
+
     private async _init() {
         fs.readdir('./build/commands/', { withFileTypes: true }, (error, f) => {
             if (error) return log.error(error);
