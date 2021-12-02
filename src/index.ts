@@ -71,6 +71,9 @@ Bot.once('shardReady', async () => {
                 if (!player.playing)
                     player.destroy();
             }, 300000);
+        })
+        .on('playerCreate', async (player) => {
+            player.setEQ(Bot.EQ.defaultEQ);
         });
 
     Bot.music.init(Bot.user.id);
