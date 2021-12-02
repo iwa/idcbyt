@@ -20,19 +20,19 @@
     },
     "homepage": "https://github.com/iwa/idcbyt#readme",
     "dependencies": {
-        "@types/node": "^16.9.6",
-        "@types/pino": "^6.3.11",
-        "@types/ws": "^7.4.7",
-        "bufferutil": "^4.0.3",
-        "discord.js": "^13.1.0",
+        "@types/node": "^16.11.11",
+        "@types/pino": "^7.0.5",
+        "@types/ws": "^8.2.1",
+        "bufferutil": "^4.0.5",
+        "discord.js": "^13.3.1",
         "dotenv": "^10.0.0",
-        "erela.js": "git+https://github.com/MenuDocs/erela.js.git#819bdcd05dcac33941c1b5f1db4b421a00502056",
+        "erela.js": "MenuDocs/erela.js#voice-packet-improvements",
         "erela.js-spotify": "^1.2.0",
-        "pino": "^6.13.3",
-        "utf-8-validate": "^5.0.5"
+        "pino": "^7.5.1",
+        "utf-8-validate": "^5.0.7"
     },
     "devDependencies": {
         "pino-pretty": "git+https://github.com/pinojs/pino-pretty.git#7a0c8768a3427314de8e7659aa1707b83d3dfbdf",
-        "typescript": "^4.4.3"
+        "typescript": "^4.5.2"
     }
 }
