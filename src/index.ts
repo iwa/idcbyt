@@ -141,6 +141,18 @@ Bot.on('voiceStateUpdate', async (oldState, newState) => {
         }
     }
 
+    if (newState.serverMute == true && oldState.serverMute == false && oldState.member.id == Bot.user.id) {
+        let player = Bot.music.players.get(oldState.guild.id);
+        player.pause(true);
+        return;
+    }
+
+    if (newState.serverMute == false && oldState.serverMute == true && oldState.member.id == Bot.user.id) {
+        let player = Bot.music.players.get(oldState.guild.id);
+        player.pause(false);
+        return;
+    }
+
     let members = channel.members;
     if (members.size === 1)
         if (members.has(Bot.user.id)) {
