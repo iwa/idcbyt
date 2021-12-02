@@ -17,6 +17,10 @@ setTimeout(() => {
             "value": commands.get("music")
         },
         {
+            "name": "**🎚 Filters**",
+            "value": commands.get("filters")
+        },
+        {
             "name": "**🛠 Utilities**",
             "value": commands.get("utility")
         },
@@ -83,8 +87,10 @@ async function readDirs() {
                     if (error) return Bot.log.error(error);
                     let string: string = "";
                     fi.forEach(async (fi) => {
-                        string = `${string}\`${fi.slice(0, -3)}\` `;
-                    })
+                        string = `${string}\`${fi.slice(0, -3)}\`, `;
+                    });
+
+                    string = string.slice(0, -2);
                     commands.set(f.name, string);
                 })
             }
