@@ -36,7 +36,7 @@ async function MultiDimension(msg: Message) {
             return Obj;
         }),
         rotation: {
-            "rotationHz": 0.2,
+            "rotationHz": 10,
         },
     });
 
