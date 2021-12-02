@@ -1,11 +1,12 @@
 import Bot from '../../Client'
 import { Message } from 'discord.js';
 import Command from '../../structures/Command';
+import PermLevels from '../../structures/PermLevels';
 
 export default new class SudoCommand extends Command {
 
     public constructor() {
-        super('sudo', Sudo, 0, [], ['EMBED_LINKS'], 'sudo');
+        super('sudo', Sudo, PermLevels.Iwa, [], ['EMBED_LINKS'], 'sudo');
     }
 
 }
@@ -13,7 +14,7 @@ export default new class SudoCommand extends Command {
 async function Sudo(msg: Message) {
     if (Bot.sudo) {
         Bot.sudo = false;
-        msg.react('⚫️');
+        msg.react('⚫');
     } else {
         Bot.sudo = true;
         msg.react('🟢');
