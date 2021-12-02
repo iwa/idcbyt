@@ -24,6 +24,19 @@ async function Reset(msg: Message) {
     if (player.voiceChannel !== msg.member.voice.channelId) return msg.channel.send(Bot.createEmbed(':x: You need to be connected in the same voice channel as me to use this command'));
 
     player.clearEQ();
+    player.node.send({
+        op: "filters",
+        guildId: msg.guild.id,
+        equalizer: player.bands.map((gain, index) => {
+            var Obj = {
+                "band": 0,
+                "gain": 0,
+            };
+            Obj.band = Number(index);
+            Obj.gain = Number(gain)
+            return Obj;
+        }),
+    });
 
     await msg.react('♻️');
 
