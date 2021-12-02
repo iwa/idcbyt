@@ -74,6 +74,7 @@ Bot.once('shardReady', async () => {
         })
         .on('playerCreate', async (player) => {
             player.setEQ(Bot.EQ.defaultEQ);
+            player.setVolume(80);
         });
 
     Bot.music.init(Bot.user.id);
