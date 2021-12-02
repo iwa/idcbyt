@@ -3,7 +3,7 @@ dotenv.config();
 
 import Bot from './Client';
 
-import { VoiceChannel } from 'discord.js';
+import { TextChannel, VoiceChannel } from 'discord.js';
 import { Manager } from "erela.js";
 
 import Command from './structures/Command';
@@ -93,7 +93,7 @@ Bot.on('messageCreate', async (msg) => {
     let cmd: Command = Bot.commands.get(req) || Bot.commands.find((comd) => comd.aliases && comd.aliases.includes(req));
 
     if (cmd) {
-        if (cmd.discordPerm && !msg.guild.me.permissions.has(cmd.discordPerm)) {
+        if (cmd.discordPerm && !msg.guild.me.permissions.has(cmd.discordPerm) && !(msg.channel as TextChannel).permissionsFor(Bot.user).has(cmd.discordPerm)) {
             makePermsErrorBetter(msg, cmd);
             return;
         }
