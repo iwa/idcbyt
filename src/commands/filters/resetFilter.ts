@@ -9,7 +9,7 @@ export default new class ResetFilter extends Command {
         super('resetfilter',
             Reset,
             PermLevels.DJ,
-            [],
+            ['clearfilter'],
             ['EMBED_LINKS', 'CONNECT', 'SPEAK', 'USE_VAD', 'ADD_REACTIONS'],
             'resetfilter');
     }
