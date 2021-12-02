@@ -36,8 +36,8 @@ async function Nightcore(msg: Message) {
             return Obj;
         }),
         timescale: {
-            "speed": 1.165,
-            "pitch": 1.125,
+            "speed": 1.25,
+            "pitch": 1.2,
             "rate": 1.05
         },
     });
