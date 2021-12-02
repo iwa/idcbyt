@@ -4,6 +4,7 @@ import { Manager } from 'erela.js';
 import fs from 'fs';
 import Command from "./structures/Command";
 import createEmbed from "./utils/createEmbed";
+import EQ from "./utils/EQ";
 
 export default new class Bot extends Client {
 
@@ -17,6 +18,8 @@ export default new class Bot extends Client {
     public commands: Collection<string, Command> = new Collection();
 
     public music: Manager;
+
+    public EQ = EQ;
 
     public createEmbed = createEmbed;
 
