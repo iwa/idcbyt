@@ -23,7 +23,7 @@ async function Reset(msg: Message) {
 
     if (player.voiceChannel !== msg.member.voice.channelId) return msg.channel.send(Bot.createEmbed(':x: You need to be connected in the same voice channel as me to use this command'));
 
-    player.clearEQ();
+    player.setEQ(Bot.EQ.defaultEQ);
     player.node.send({
         op: "filters",
         guildId: msg.guild.id,
