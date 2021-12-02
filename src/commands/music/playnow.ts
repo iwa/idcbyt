@@ -29,7 +29,10 @@ async function PlayNowMusic(msg: Message, args: string[]) {
         selfDeafen: true
     });
 
-    if (player.state !== "CONNECTED") player.connect();
+    if (player.state !== "CONNECTED") {
+        player.connect();
+        player.stop();
+    }
 
     if (player.voiceChannel !== voiceChannel.id) return msg.channel.send(Bot.createEmbed(':x: You must be connected in the same voice channel as me to use this command'));
 
@@ -49,14 +52,14 @@ async function PlayNowMusic(msg: Message, args: string[]) {
         let icon = '';
         if (res.tracks[0].uri) {
             if (res.tracks[0].uri.startsWith("https://www.youtube.com"))
-                icon = "<:youtube:890514824071639130> ";
+                icon = "<:bot_youtube:916021328883118080> ";
             else if (res.tracks[0].uri.startsWith("https://soundcloud.com"))
-                icon = "<:soundcloud:890514824151310356> ";
+                icon = "<:bot_soundcloud:916021329688416267> ";
         }
 
         if (!res.tracks) return msg.channel.send(":x: An unexpected error occurred.");
 
-        if (player.queue.includes(res.tracks[0])) return msg.channel.send(Bot.createEmbed(':x: Song already in the queue!'));
+        if (player.queue.find(value => value.title === res.tracks[0].title) || player.queue.current?.title === res.tracks[0].title) return msg.channel.send(Bot.createEmbed(':warning: Song already in the queue!', 'Use -loop or -loopq if you wanna loop songs'));
 
         player.queue.add(res.tracks[0], 0);
         player.stop();
@@ -65,5 +68,8 @@ async function PlayNowMusic(msg: Message, args: string[]) {
         Bot.log.info({ msg: 'playnow', author: { id: msg.author.id, name: msg.author.tag }, guild: { id: msg.guild.id, name: msg.guild.name }, song: { name: Util.escapeMarkdown(res.tracks[0].title), url: res.tracks[0].uri } });
     }
 
-    if (!player.playing) player.play();
+    if (!player.playing && !player.paused && !player.queue.size) {
+        player.play();
+        player.pause(false);
+    }
 };
