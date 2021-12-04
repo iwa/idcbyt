@@ -64,7 +64,7 @@ async function PlayNowMusic(msg: Message, args: string[]) {
         player.queue.add(res.tracks[0], 0);
         player.stop();
 
-        await msg.channel.send(Bot.createEmbed(null, `${icon}[${res.tracks[0].title}](${res.tracks[0].uri})`, null, { name: 'Playing now' }, res.tracks[0].thumbnail));
+        await msg.channel.send(Bot.createEmbed(null, `${icon}[${res.tracks[0].title}](${res.tracks[0].uri})`, null, { name: 'Playing now' }, `https://img.youtube.com/vi/${res.tracks[0].identifier}/mqdefault.jpg`));
         Bot.log.info({ msg: 'playnow', author: { id: msg.author.id, name: msg.author.tag }, guild: { id: msg.guild.id, name: msg.guild.name }, song: { name: Util.escapeMarkdown(res.tracks[0].title), url: res.tracks[0].uri } });
     }
 
