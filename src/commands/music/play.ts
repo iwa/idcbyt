@@ -1,5 +1,5 @@
 import Bot from '../../Client'
-import { Message, MessageEmbed, Util } from 'discord.js'
+import { Message, Util } from 'discord.js'
 import Command from '../../structures/Command';
 import PermLevels from '../../structures/PermLevels';
 
