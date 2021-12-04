@@ -73,13 +73,19 @@ Bot.once('shardReady', async () => {
             }, 300000);
         })
         .on('playerCreate', async (player) => {
-            player.setEQ(Bot.EQ.defaultEQ);
-            player.setVolume(80);
+            if (process.env.NODE_ENV === 'production') {
+                player.setEQ(Bot.EQ.defaultEQ);
+                player.setVolume(80);
+            }
         });
 
     Bot.music.init(Bot.user.id);
 
     Bot.on("raw", d => Bot.music.updateVoiceState(d));
+
+    Bot.music.on('socketClosed', (player, payload) => {
+        console.debug(payload.guildId, payload.code, payload.op, payload.reason);
+    });
 });
 
 // Message Event
