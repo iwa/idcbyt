@@ -1,0 +1,26 @@
+version: "3.9"
+services:
+  idcbyt:
+    build: .
+    container_name: idcbyt-bot
+    restart: unless-stopped
+    environment:
+      TOKEN: ${TOKEN}
+      CLIENT_ID: ${CLIENT_ID}
+      SPOTIFY_CLIENT: ${SPOTIFY_CLIENT}
+      SPOTIFY_SECRET: ${SPOTIFY_SECRET}
+      DEV_GUILD: "449334887019970570"
+      IWA: "125325519054045184"
+      PREFIX: "-"
+      LAVALINK_HOST: "lavalink"
+      LAVALINK_PORT: 8070
+      LAVALINK_PWD: "nowayimpossible"
+      CDN_URL: "cdn.iwa.sh"
+      NODE_ENV: 'production'
+
+  lavalink:
+    image: fredboat/lavalink:master-v3
+    container_name: idcbyt-lavalink
+    restart: unless-stopped
+    volumes:
+      - ./lavalink/application.yml:/opt/Lavalink/application.yml
