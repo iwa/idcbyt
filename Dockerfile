@@ -6,7 +6,6 @@ WORKDIR /app
 COPY package.json /app
 COPY yarn.lock /app
 COPY tsconfig.json /app
-COPY .git /app/.git
 COPY src /app/src
 
 RUN yarn
