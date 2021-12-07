@@ -23,4 +23,4 @@ services:
     container_name: idcbyt-lavalink
     restart: unless-stopped
     volumes:
-      - ./lavalink/application.yml:/opt/Lavalink/application.yml
+      - ${PWD}/lavalink/application.yml:/opt/Lavalink/application.yml
